@@ -94,6 +94,7 @@ public class TelaPrincipal extends JFrame {
 		btnRelaCedu.setBounds(20, 159, 324, 34);
 		contentPane.add(btnRelaCedu);
 		
+		
 		JButton btnValor = new JButton("Valor total disponível");
 		btnValor.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btnValor.setBackground(new Color(201, 231, 227));
@@ -101,10 +102,16 @@ public class TelaPrincipal extends JFrame {
 		contentPane.add(btnValor);
 		
 		JButton btnRepo = new JButton("Reposição de Cédulas");
+		btnRepo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				mostrarPainelReposicao();
+			}
+		});
 		btnRepo.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btnRepo.setBackground(new Color(201, 231, 227));
 		btnRepo.setBounds(20, 249, 324, 34);
 		contentPane.add(btnRepo);
+		
 		
 		JButton btnCota = new JButton("Cóta Mínima");
 		btnCota.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -142,5 +149,25 @@ public class TelaPrincipal extends JFrame {
 	}
 	private void sacarValor(Integer valor) {
 		JOptionPane.showMessageDialog(this,caixaEletronico.sacar(valor),"Seu dinheiro:", JOptionPane.PLAIN_MESSAGE);
+	}
+	
+	private void mostrarPainelReposicao() {
+		IconFontSwing.register(FontAwesome.getIconFont());
+		Icon icon = IconFontSwing.buildIcon(FontAwesome.MONEY, 30);
+		String cedula = (String) JOptionPane.showInputDialog(this,"Digite a cedula que deseja repor:","Repor",JOptionPane.INFORMATION_MESSAGE,icon, null, "");
+		
+		IconFontSwing.register(FontAwesome.getIconFont());
+		Icon icon2 = IconFontSwing.buildIcon(FontAwesome.MONEY, 30);
+		String quantidade = (String) JOptionPane.showInputDialog(this,"Digite a quantidade de cedulas que deseja repor:","Repor",JOptionPane.INFORMATION_MESSAGE,icon, null, "");
+		
+		try {
+			Integer cedulaDigitada = Integer.parseInt(cedula);
+			Integer quantidadeDigitada = Integer.parseInt(quantidade);
+			String mensagem = caixaEletronico.reposicaoCedulas(cedulaDigitada,quantidadeDigitada);
+			JOptionPane.showMessageDialog(this, mensagem);
+		}
+		catch (Exception e) {
+			JOptionPane.showMessageDialog(this, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+		}
 	}
 }
