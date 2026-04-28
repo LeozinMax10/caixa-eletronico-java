@@ -31,6 +31,7 @@ public class CaixaEletronico implements ICaixaEletronico{
 		
 		public String reposicaoCedulas(Integer cedula, Integer quantidade) {
 				
+			
 				if (cedula == 100) {
 					cedulas[0][1] = cedulas[0][1] += quantidade; 
 				}
@@ -50,7 +51,7 @@ public class CaixaEletronico implements ICaixaEletronico{
 					cedulas[5][1] = cedulas[5][1] += quantidade; 
 				}
 				else{
-					 System.out.println("A cedula digitada não existe no sistema.");
+					 throw new RuntimeException("A cedula digitada não existe no sistema.");
 				}
 				
 				String resposta = "Reposição realizada com sucesso";
